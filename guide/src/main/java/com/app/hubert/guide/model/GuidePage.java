@@ -257,4 +257,25 @@ public class GuidePage {
         }
         return relativeGuides;
     }
+
+    /**
+     * 添加需要高亮的view
+     *
+     * @param view          需要高亮的view
+     * @param shape         高亮形状{@link com.app.hubert.guide.model.HighLight.Shape}
+     * @param round         圆角尺寸，单位dp，仅{@link com.app.hubert.guide.model.HighLight.Shape#ROUND_RECTANGLE}有效
+     * @param relativeGuide 相对于高亮的引导布局
+     */
+    public GuidePage addHighLight(View view, HighLight.Shape shape, int round, int top,int bottom,int left,int right,
+                                  @Nullable RelativeGuide relativeGuide) {
+        NewHighlightView highlight = new NewHighlightView(view, shape, round, top,bottom,left,right);
+        if (relativeGuide != null) {
+            relativeGuide.highLight = highlight;
+            highlight.setOptions(new HighlightOptions.Builder().setRelativeGuide(relativeGuide).build());
+        }
+        highLights.add(highlight);
+        return this;
+    }
 }
+
+

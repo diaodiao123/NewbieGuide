@@ -4,26 +4,21 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.SharedPreferences;
+import android.graphics.RectF;
 import android.os.Build;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 
 import com.app.hubert.guide.NewbieGuide;
 import com.app.hubert.guide.lifecycle.FragmentLifecycleAdapter;
 import com.app.hubert.guide.lifecycle.ListenerFragment;
 import com.app.hubert.guide.lifecycle.V4ListenerFragment;
 import com.app.hubert.guide.listener.OnGuideChangedListener;
-import com.app.hubert.guide.listener.OnLayoutInflatedListener;
 import com.app.hubert.guide.listener.OnPageChangedListener;
 import com.app.hubert.guide.model.GuidePage;
-import com.app.hubert.guide.model.RelativeGuide;
 import com.app.hubert.guide.util.LogUtil;
-import com.app.hubert.guide.util.ScreenUtils;
+import com.app.hubert.guide.util.ObservableScrollView;
 
 import java.lang.reflect.Field;
 import java.security.InvalidParameterException;
@@ -312,6 +307,24 @@ public class Controller {
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void showScroviewPage(final GuidePage guidePage, final int page , ObservableScrollView scrollView, final View view){
+        scrollView.fullScroll(View.FOCUS_DOWN);
+        scrollView.setScrollViewListener(new ObservableScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChanged(ObservableScrollView scrollView, int x, int y, int oldx, int oldy) {
+                if (scrollView.getScrollY() + scrollView.getHeight() -
+                        scrollView.getPaddingTop() - scrollView.getPaddingBottom()
+                        == scrollView.getChildAt(0).getHeight()) {//判断滑动到底部
+                    int[] location = new int[2];
+                    view.getLocationOnScreen(location);
+                    int y1 = location[1];
+                    guidePage.addHighLight(new RectF(0, y1, view.getWidth(), y1 + view.getHeight()));
+                    showPage(page);
+                }
+            }
+        });
     }
 
 }
