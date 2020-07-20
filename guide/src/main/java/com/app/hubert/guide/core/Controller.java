@@ -134,9 +134,6 @@ public class Controller {
             throw new InvalidParameterException("The Guide page position is out of range. current:"
                     + position + ", range: [ 0, " + guidePages.size() + " )");
         }
-        if (current == position) {
-            return;
-        }
         current = position;
         //fix #59 GuideLayout.setOnGuideLayoutDismissListener() on a null object reference
         if (currentLayout != null) {
