@@ -175,7 +175,7 @@ public class Controller {
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         currentLayout = guideLayout;
         if (onPageChangedListener != null) {
-            onPageChangedListener.onPageChanged(current);
+            onPageChangedListener.onPageChanged(current,Controller.this);
         }
         isShowing = true;
     }
