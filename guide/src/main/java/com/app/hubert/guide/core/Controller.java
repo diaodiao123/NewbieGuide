@@ -17,6 +17,10 @@ import com.app.hubert.guide.lifecycle.V4ListenerFragment;
 import com.app.hubert.guide.listener.OnGuideChangedListener;
 import com.app.hubert.guide.listener.OnPageChangedListener;
 import com.app.hubert.guide.model.GuidePage;
+import com.app.hubert.guide.model.HighLight;
+import com.app.hubert.guide.model.HighlightOptions;
+import com.app.hubert.guide.model.HighlightRectF;
+import com.app.hubert.guide.model.RelativeGuide;
 import com.app.hubert.guide.util.LogUtil;
 import com.app.hubert.guide.util.ObservableScrollView;
 
@@ -309,7 +313,7 @@ public class Controller {
         }
     }
 
-    public void showScroviewPage(final GuidePage guidePage, final int page , ObservableScrollView scrollView, final View view){
+    public void showScroviewPage(final GuidePage guidePage, final int page , ObservableScrollView scrollView, final View view, final HighLight.Shape shape, final int round, final RelativeGuide relativeGuide){
         scrollView.fullScroll(View.FOCUS_DOWN);
         scrollView.setScrollViewListener(new ObservableScrollView.OnScrollChangeListener() {
             @Override
@@ -320,7 +324,7 @@ public class Controller {
                     int[] location = new int[2];
                     view.getLocationOnScreen(location);
                     int y1 = location[1];
-                    guidePage.addHighLight(new RectF(0, y1, view.getWidth(), y1 + view.getHeight()));
+                    guidePage.addHighLight(new RectF(0, y1, view.getWidth(), y1 + view.getHeight()),shape,round,relativeGuide);
                     showPage(page);
                 }
             }
