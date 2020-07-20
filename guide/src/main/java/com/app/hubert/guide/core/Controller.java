@@ -310,22 +310,6 @@ public class Controller {
         }
     }
 
-    public void showScroviewPage(final GuidePage guidePage, final int page , ObservableScrollView scrollView, final View view, final HighLight.Shape shape, final int round, final RelativeGuide relativeGuide){
-        scrollView.fullScroll(View.FOCUS_DOWN);
-        scrollView.setScrollViewListener(new ObservableScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChanged(ObservableScrollView scrollView, int x, int y, int oldx, int oldy) {
-                if (scrollView.getScrollY() + scrollView.getHeight() -
-                        scrollView.getPaddingTop() - scrollView.getPaddingBottom()
-                        == scrollView.getChildAt(0).getHeight()) {//判断滑动到底部
-                    int[] location = new int[2];
-                    view.getLocationOnScreen(location);
-                    int y1 = location[1];
-                    guidePage.addHighLight(new RectF(0, y1, view.getWidth(), y1 + view.getHeight()),shape,round,relativeGuide);
-                    showPage(page);
-                }
-            }
-        });
-    }
+
 
 }
