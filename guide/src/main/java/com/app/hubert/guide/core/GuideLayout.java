@@ -194,9 +194,8 @@ public class GuideLayout extends FrameLayout {
      */
     private void addCustomToLayout(GuidePage guidePage) {
         removeAllViews();
-        int layoutResId = guidePage.getLayoutResId();
-        if (layoutResId != 0) {
-            View view = LayoutInflater.from(getContext()).inflate(layoutResId, this, false);
+        View view = guidePage.getLayoutResId();
+        if (view != null) {
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             int[] viewIds = guidePage.getClickToDismissIds();

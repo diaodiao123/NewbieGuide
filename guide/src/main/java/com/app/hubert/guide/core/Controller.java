@@ -54,6 +54,7 @@ public class Controller {
     private SharedPreferences sp;
     private int indexOfChild = -1;//使用anchor时记录的在父布局的位置
     private boolean isShowing;
+    private int position=-1;
 
     public Controller(Builder builder) {
         this.activity = builder.activity;
@@ -135,6 +136,7 @@ public class Controller {
                     + position + ", range: [ 0, " + guidePages.size() + " )");
         }
         current = position;
+        this.position=position;
         //fix #59 GuideLayout.setOnGuideLayoutDismissListener() on a null object reference
         if (currentLayout != null) {
             currentLayout.setOnGuideLayoutDismissListener(new GuideLayout.OnGuideLayoutDismissListener() {
@@ -171,7 +173,7 @@ public class Controller {
         mParentView.addView(guideLayout, new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         currentLayout = guideLayout;
-        if (onPageChangedListener != null) {
+        if (onPageChangedListener != null&&this.position!=current) {
             onPageChangedListener.onPageChanged(current,Controller.this);
         }
         isShowing = true;
