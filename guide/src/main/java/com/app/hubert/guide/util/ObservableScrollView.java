@@ -11,6 +11,8 @@ import android.widget.ScrollView;
 public class ObservableScrollView extends ScrollView {
     //回调监听接口
     private OnScrollChangeListener mOnScrollChangeListener;
+    //回调监听接口
+    private OnScrollChangeDistanceListener mOnScrollChangeDisListener;
     //标识是否滑动到顶部
     private boolean isScrollToStart = false;
     //标识是否滑动到底部
@@ -53,6 +55,9 @@ public class ObservableScrollView extends ScrollView {
     @Override
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         super.onScrollChanged(l, t, oldl, oldt);
+        if (mOnScrollChangeDisListener!=null){
+            mOnScrollChangeDisListener.onScrollChanged(l,t,oldl,oldt);
+        }
         if (mOnScrollChangeListener != null) {
             Log.i("CustomScrollView", "scrollY:" + getScrollY());
             //滚动到顶部，ScrollView存在回弹效果效应（这里只会调用两次，如果用<=0,会多次触发）
@@ -103,6 +108,19 @@ public class ObservableScrollView extends ScrollView {
             return getHeight() < childHeight;
         }
         return false;
+    }
+
+    public void setOnScrollChangeDistanceListener(OnScrollChangeDistanceListener onScrollChangeListener) {
+        mOnScrollChangeDisListener = onScrollChangeListener;
+    }
+
+
+    //滑动监听接口
+    public interface OnScrollChangeDistanceListener {
+
+        //滑动距离的监听
+        void onScrollChanged(int x, int y, int oldx, int oldy);
+
     }
 
 }
