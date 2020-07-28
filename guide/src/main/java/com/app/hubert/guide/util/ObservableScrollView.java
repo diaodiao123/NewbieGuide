@@ -96,4 +96,13 @@ public class ObservableScrollView extends ScrollView {
         mOnScrollChangeListener = onScrollChangeListener;
     }
 
+     public boolean isCanScroll() {
+        View child = getChildAt(0);
+        if (child != null) {
+            int childHeight = child.getHeight();
+            return getHeight() < childHeight;
+        }
+        return false;
+    }
+
 }
