@@ -17,27 +17,7 @@ public class ObservableScrollView extends ScrollView {
     private boolean isScrollToStart = false;
     //标识是否滑动到底部
     private boolean isScrollToEnd = false;
-    private static final int CODE_TO_START = 0x001;
-    private static final int CODE_TO_END = 0x002;
-    private Handler mHandler = new Handler() {
 
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case CODE_TO_START:
-                    //重置标志“滑动到顶部”时的标志位
-                    isScrollToStart = false;
-                    break;
-                case CODE_TO_END:
-                    //重置标志“滑动到底部”时的标志位
-                    isScrollToEnd = false;
-                    break;
-                default:
-                    break;
-            }
-        }
-    };
 
     public ObservableScrollView(Context context) {
         super(context);
@@ -65,7 +45,6 @@ public class ObservableScrollView extends ScrollView {
                 //过滤操作，优化为一次调用
                 if (!isScrollToStart) {
                     isScrollToStart = true;
-                    mHandler.sendEmptyMessageDelayed(CODE_TO_START, 200);
                     Log.e("CustomScrollView", "toStart");
                     mOnScrollChangeListener.onScrollToStart();
                 }
@@ -76,7 +55,6 @@ public class ObservableScrollView extends ScrollView {
                     //优化，只过滤第一次
                     if (!isScrollToEnd) {
                         isScrollToEnd = true;
-                        mHandler.sendEmptyMessageDelayed(CODE_TO_END, 200);
                         Log.e("CustomScrollView", "toEnd,scrollY:" + getScrollY());
                         mOnScrollChangeListener.onScrollToEnd();
                     }
@@ -98,6 +76,8 @@ public class ObservableScrollView extends ScrollView {
     }
 
     public void setOnScrollChangeListener(OnScrollChangeListener onScrollChangeListener) {
+        isScrollToStart = false;
+        isScrollToEnd = false;
         mOnScrollChangeListener = onScrollChangeListener;
     }
 
