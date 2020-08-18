@@ -114,9 +114,6 @@ public class Controller {
         mParentView.post(new Runnable() {
             @Override
             public void run() {
-                if (mIsDissmiss){
-                    return;
-                }
                 if (guidePages == null || guidePages.size() == 0) {
                     throw new IllegalStateException("there is no guide to show!! Please add at least one Page.");
                 }
@@ -124,6 +121,10 @@ public class Controller {
                 showGuidePage();
                 if (onGuideChangedListener != null) {
                     onGuideChangedListener.onShowed(Controller.this);
+                }
+                if (mIsDissmiss){
+                    remove();
+                    return;
                 }
                 addListenerFragment();
                 sp.edit().putInt(label, showed + 1).apply();
