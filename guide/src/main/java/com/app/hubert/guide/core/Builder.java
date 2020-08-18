@@ -117,12 +117,22 @@ public class Builder {
      *
      * @return controller
      */
+    private  Controller controller;
     public Controller show() {
         check();
-        Controller controller = new Controller(this);
+        controller = new Controller(this);
         controller.show();
         return controller;
     }
+
+    public void dissmiss(Boolean isDismiss) {
+        if (controller!=null){
+            controller.isDismiss(isDismiss);
+        }
+    }
+
+
+
 
     private void check() {
         if (TextUtils.isEmpty(label)) {

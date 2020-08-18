@@ -24,9 +24,11 @@ import com.app.hubert.guide.model.RelativeGuide;
 import com.app.hubert.guide.util.LogUtil;
 import com.app.hubert.guide.util.ObservableScrollView;
 
+import java.io.BufferedOutputStream;
 import java.lang.reflect.Field;
 import java.security.InvalidParameterException;
 import java.util.List;
+import java.util.TreeMap;
 
 /**
  * Created by hubert
@@ -55,6 +57,7 @@ public class Controller {
     private int indexOfChild = -1;//使用anchor时记录的在父布局的位置
     private boolean isShowing;
     private int position=-1;
+    private Boolean mIsDissmiss=false;
 
     public Controller(Builder builder) {
         this.activity = builder.activity;
@@ -111,6 +114,9 @@ public class Controller {
         mParentView.post(new Runnable() {
             @Override
             public void run() {
+                if (mIsDissmiss){
+                    return;
+                }
                 if (guidePages == null || guidePages.size() == 0) {
                     throw new IllegalStateException("there is no guide to show!! Please add at least one Page.");
                 }
@@ -125,6 +131,9 @@ public class Controller {
         });
     }
 
+    public void isDismiss(Boolean isDissmiss){
+        mIsDissmiss =isDissmiss;
+    }
     /**
      * 显示相应position的引导页
      *
