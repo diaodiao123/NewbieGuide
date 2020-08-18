@@ -126,6 +126,41 @@ public class Controller {
     }
 
     /**
+     * 显示指引layout（f）
+     */
+    public void show(final Boolean isShow) {
+        final int showed = sp.getInt(label, 0);
+        if (!alwaysShow) {
+            if (showed >= showCounts) {
+                return;
+            }
+        }
+
+        if (isShowing) {
+            return;
+        }
+        isShowing = true;
+        mParentView.post(new Runnable() {
+            @Override
+            public void run() {
+                if (!isShow){
+                    return;
+                }
+                if (guidePages == null || guidePages.size() == 0) {
+                    throw new IllegalStateException("there is no guide to show!! Please add at least one Page.");
+                }
+                current = 0;
+                showGuidePage();
+                if (onGuideChangedListener != null) {
+                    onGuideChangedListener.onShowed(Controller.this);
+                }
+                addListenerFragment();
+                sp.edit().putInt(label, showed + 1).apply();
+            }
+        });
+    }
+
+    /**
      * 显示相应position的引导页
      *
      * @param position from 0 to (pageSize - 1)

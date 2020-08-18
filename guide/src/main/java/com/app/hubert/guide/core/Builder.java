@@ -124,6 +124,18 @@ public class Builder {
         return controller;
     }
 
+    /**
+     * 构建引导层controller并直接显示引导层
+     *
+     * @return controller
+     */
+    public Controller show(Boolean isShow) {
+        check();
+        Controller controller = new Controller(this);
+        controller.show(isShow);
+        return controller;
+    }
+
     private void check() {
         if (TextUtils.isEmpty(label)) {
             throw new IllegalArgumentException("the param 'label' is missing, please call setLabel()");
